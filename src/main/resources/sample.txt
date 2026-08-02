@@ -1,0 +1,25 @@
+Artificial Intelligence (AI) is the field of computer science focused on building systems capable of performing tasks that normally require human intelligence. These tasks include reasoning, learning, perception, natural language understanding, planning, and decision making. Modern AI systems are increasingly powered by machine learning models trained on large amounts of data.
+
+Machine Learning (ML) is a subset of AI in which algorithms improve their performance by learning patterns from data instead of relying solely on explicitly programmed rules. Supervised learning uses labeled data to train models, while unsupervised learning discovers hidden patterns in unlabeled datasets. Reinforcement learning enables an agent to learn through trial and error by interacting with an environment and receiving rewards or penalties.
+
+Deep Learning is a specialized branch of machine learning that uses artificial neural networks with multiple hidden layers. Deep learning has significantly improved the state of the art in computer vision, speech recognition, recommendation systems, and natural language processing. Models such as transformers have become the foundation of many modern AI applications.
+
+Large Language Models (LLMs) are transformer-based neural networks trained on massive text corpora. They learn statistical relationships between words and can generate coherent text, answer questions, summarize documents, write code, and assist with reasoning tasks. Examples include open-source models like Qwen, Llama, and Mistral, as well as proprietary models such as GPT.
+
+Retrieval-Augmented Generation (RAG) combines traditional information retrieval with language generation. Instead of relying entirely on the model's internal knowledge, RAG retrieves relevant information from external documents and injects that information into the prompt before asking the language model to generate an answer. This significantly reduces hallucinations and allows the model to answer questions about private or recently updated information.
+
+A typical RAG pipeline begins with document ingestion. Documents are uploaded in formats such as PDF, Word, Markdown, or plain text. The system extracts the raw text from these documents using specialized parsers. For PDFs, libraries such as Apache PDFBox can extract textual content while preserving page boundaries.
+
+After extraction, the document is divided into smaller pieces called chunks. Chunking is necessary because language models have a limited context window and cannot process extremely large documents in a single request. Choosing the appropriate chunk size is one of the most important design decisions in a RAG system. Chunks that are too large waste context, while chunks that are too small lose important information.
+
+Many production systems use overlapping chunks. Instead of splitting documents into completely separate sections, consecutive chunks share a portion of their content. Overlap helps preserve context when important information spans chunk boundaries. Although overlap increases storage requirements slightly, it often improves retrieval quality.
+
+Each chunk is converted into a numerical representation called an embedding. Embeddings are dense vectors that capture the semantic meaning of text. Unlike keyword search, embedding-based retrieval allows systems to find conceptually similar information even when the exact words differ.
+
+Embeddings are stored in vector databases such as pgvector, Pinecone, Qdrant, Weaviate, or Milvus. These databases are optimized for similarity search rather than traditional relational queries. Given a user's question, the application generates an embedding for the query and retrieves the most similar document chunks using cosine similarity or another distance metric.
+
+Once the relevant chunks have been retrieved, they are inserted into the prompt sent to the language model. The model uses these retrieved passages as grounding information to produce an accurate response. Since the retrieved information comes from trusted documents, the generated answer is less likely to hallucinate and can often include citations back to the original source.
+
+Spring AI provides abstractions that simplify building AI-powered applications in Java. Developers interact with interfaces such as ChatClient, EmbeddingModel, and VectorStore rather than calling vendor-specific APIs directly. This abstraction makes it easier to switch between providers like Ollama, OpenAI, Anthropic, or Azure OpenAI with minimal code changes.
+
+In enterprise environments, observability is just as important as model quality. Engineers monitor latency, token usage, retrieval accuracy, prompt effectiveness, and user feedback. These metrics help identify bottlenecks and improve the overall user experience. Production AI systems are therefore a combination of traditional software engineering, data engineering, and machine learning techniques rather than just prompt engineering.

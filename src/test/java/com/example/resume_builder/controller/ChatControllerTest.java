@@ -6,10 +6,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.example.resume_builder.chat.controller.ChatController;
-import com.example.resume_builder.chat.dto.ChatRequest;
-import com.example.resume_builder.chat.dto.ChatResponse;
-import com.example.resume_builder.chat.service.ChatService;
+import com.example.resume_builder.controller.ChatController;
+import com.example.resume_builder.dto.ChatRequest;
+import com.example.resume_builder.dto.ChatResponse;
+import com.example.resume_builder.service.ChatService;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

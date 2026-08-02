@@ -38,4 +38,5 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+	implementation("org.apache.pdfbox:pdfbox:3.0.5")
 }

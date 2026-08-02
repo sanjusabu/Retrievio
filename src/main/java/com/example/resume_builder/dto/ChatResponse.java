@@ -1,4 +1,4 @@
-package com.example.resume_builder.chat.dto;
+package com.example.resume_builder.dto;
 
 import lombok.Data;
 

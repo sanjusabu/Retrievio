@@ -1,8 +1,8 @@
-package com.example.resume_builder.chat.service;
+package com.example.resume_builder.service;
 import org.springframework.stereotype.Service;
 
-import com.example.resume_builder.chat.dto.ChatRequest;
-import com.example.resume_builder.chat.dto.ChatResponse;
+import com.example.resume_builder.dto.ChatRequest;
+import com.example.resume_builder.dto.ChatResponse;
 
 import org.springframework.ai.chat.client.ChatClient;
 

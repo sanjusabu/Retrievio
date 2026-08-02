@@ -1,8 +1,8 @@
-package com.example.resume_builder.chat.controller;
+package com.example.resume_builder.controller;
 
-import com.example.resume_builder.chat.dto.ChatRequest;
-import com.example.resume_builder.chat.dto.ChatResponse;
-import com.example.resume_builder.chat.service.ChatService;
+import com.example.resume_builder.dto.ChatRequest;
+import com.example.resume_builder.dto.ChatResponse;
+import com.example.resume_builder.service.ChatService;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
