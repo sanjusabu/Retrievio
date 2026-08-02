@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public class ChunkService {
 
-    private static final int CHUNK_SIZE = 1000;
+    private static final int CHUNK_SIZE = 100;
 
     public List<Chunk> split(String text) {
 
@@ -17,14 +17,20 @@ public class ChunkService {
 
         int chunkNumber = 1;
 
-        for (int start = 0; start < text.length(); start += CHUNK_SIZE) {
+        String[] texts = text.split(" ");
 
-            int end = Math.min(start + CHUNK_SIZE, text.length());
+        for (int start = 0; start < texts.length; start += CHUNK_SIZE) {
+
+            int end = Math.min(start + CHUNK_SIZE, texts.length);
+            StringBuilder chunkText = new StringBuilder();
+            for (int i = start; i < end; i++) {
+                chunkText.append(texts[i]).append(" ");
+            }
 
             chunks.add(
                     new Chunk(
                             chunkNumber++,
-                            text.substring(start, end)
+                            chunkText.toString().trim()
                     )
             );
         }
