@@ -10,32 +10,36 @@ import java.util.List;
 public class ChunkService {
 
     private static final int CHUNK_SIZE = 100;
+    private static final int OVERLAP = 20;
 
     public List<Chunk> split(String text) {
+
+        String[] words = text.split("\\s+");
 
         List<Chunk> chunks = new ArrayList<>();
 
         int chunkNumber = 1;
 
-        String[] texts = text.split(" ");
+        for (int start = 0; start < words.length; start += (CHUNK_SIZE - OVERLAP)) {
 
-        for (int start = 0; start < texts.length; start += CHUNK_SIZE) {
+            int end = Math.min(start + CHUNK_SIZE, words.length);
 
-            int end = Math.min(start + CHUNK_SIZE, texts.length);
-            StringBuilder chunkText = new StringBuilder();
+            StringBuilder builder = new StringBuilder();
+
             for (int i = start; i < end; i++) {
-                chunkText.append(texts[i]).append(" ");
+                builder.append(words[i]).append(" ");
             }
 
-            chunks.add(
-                    new Chunk(
-                            chunkNumber++,
-                            chunkText.toString().trim()
-                    )
-            );
+            chunks.add(new Chunk(
+                    chunkNumber++,
+                    builder.toString().trim()
+            ));
+
+            if (end == words.length) {
+                break;
+            }
         }
 
         return chunks;
     }
-
 }
