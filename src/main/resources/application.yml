@@ -1,7 +1,4 @@
 spring:
-  application:
-    name: resume-builder
-
   ai:
     ollama:
       base-url: http://localhost:11434
@@ -9,3 +6,7 @@ spring:
       chat:
         options:
           model: qwen3
+
+      embedding:
+        options:
+          model: nomic-embed-text
