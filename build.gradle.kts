@@ -39,4 +39,12 @@ dependencies {
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 	implementation("org.apache.pdfbox:pdfbox:3.0.5")
+	implementation("jakarta.persistence:jakarta.persistence-api:3.1.0")
+
+    // JPA Provider (Hibernate ORM)
+    implementation("org.hibernate.orm:hibernate-core:6.5.0.Final")
+
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    runtimeOnly("org.postgresql:postgresql")
 }

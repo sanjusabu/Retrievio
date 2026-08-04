@@ -1,6 +1,8 @@
 package com.example.resume_builder.service;
 
 import com.example.resume_builder.model.Chunk;
+import com.example.resume_builder.model.ParsedDocument;
+
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,9 +14,9 @@ public class ChunkService {
     private static final int CHUNK_SIZE = 100;
     private static final int OVERLAP = 20;
 
-    public List<Chunk> split(String text) {
+    public List<Chunk> split(ParsedDocument text) {
 
-        String[] words = text.split("\\s+");
+        String[] words = text.content().split("\\s+");
 
         List<Chunk> chunks = new ArrayList<>();
 

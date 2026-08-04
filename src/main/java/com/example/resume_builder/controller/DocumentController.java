@@ -35,36 +35,41 @@ public class DocumentController {
         return documentService.extractChunks(file);
 
     }
+    @PostMapping("/save")
+    public void save() {
 
-    @GetMapping("/embedding/test")
-    public List<EmbeddingPreview> test() throws Exception {
-
-        String text = new ClassPathResource("sample.txt")
-                .getContentAsString(StandardCharsets.UTF_8);
-
-        List<Chunk> chunks = chunkService.split(text);
-
-        return embeddingService.preview(chunks);
-    }
-
-    @GetMapping("/search/test")
-    public Chunk search() throws Exception {
-
-        String text =
-                new ClassPathResource("sample.txt")
-                        .getContentAsString(StandardCharsets.UTF_8);
-
-        List<Chunk> chunks =
-                chunkService.split(text);
-
-        List<ChunkEmbedding> embeddings =
-                embeddingService.embed(chunks);
-
-        return searchService.search(
-                "Explain Retrieval Augmented Generation",
-                embeddings
-        );
+        documentService.save();
 
     }
+    // @GetMapping("/embedding/test")
+    // public List<EmbeddingPreview> test() throws Exception {
+
+    //     String text = new ClassPathResource("sample.txt")
+    //             .getContentAsString(StandardCharsets.UTF_8);
+
+    //     List<Chunk> chunks = chunkService.split(text);
+
+    //     return embeddingService.preview(chunks);
+    // }
+
+    // @GetMapping("/search/test")
+    // public Chunk search() throws Exception {
+
+    //     String text =
+    //             new ClassPathResource("sample.txt")
+    //                     .getContentAsString(StandardCharsets.UTF_8);
+
+    //     List<Chunk> chunks =
+    //             chunkService.split(text);
+
+    //     List<ChunkEmbedding> embeddings =
+    //             embeddingService.embed(chunks);
+
+    //     return searchService.search(
+    //             "Explain Retrieval Augmented Generation",
+    //             embeddings
+    //     );
+
+    // }
 
 }
