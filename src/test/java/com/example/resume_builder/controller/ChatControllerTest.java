@@ -31,7 +31,6 @@ class ChatControllerTest {
     void shouldReturnChatResponseForPostRequest() throws Exception {
         ChatResponse chatResponse = new ChatResponse();
         chatResponse.setResponse("Echo: Build your resume");
-        when(chatService.processChat(any(ChatRequest.class))).thenReturn(chatResponse);
 
         mockMvc.perform(post("/api/v1/chat")
                 .contentType(MediaType.APPLICATION_JSON)
