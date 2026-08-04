@@ -15,13 +15,13 @@ public class ChatService {
         this.chatClient = chatClientBuilder.build();
     }
 
-    public ChatResponse chat(ChatRequest chatRequest) {
-        ChatResponse chatResponse = new ChatResponse();
-        chatResponse.setResponse(chatClient
-                .prompt()
-                .user(chatRequest.getRequest())
-                .call()
-                .content());
-        return chatResponse;
-    }
+    // public ChatResponse chat(ChatRequest chatRequest) {
+    //     ChatResponse chatResponse = new ChatResponse();
+    //     chatResponse.setResponse(chatClient
+    //             .prompt()
+    //             .user(chatRequest.getRequest())
+    //             .call()
+    //             .content());
+    //     return chatResponse;
+    // }
 }
