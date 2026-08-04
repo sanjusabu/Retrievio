@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.resume_builder.dto.EmbeddingPreview;
 import com.example.resume_builder.model.Chunk;
 import com.example.resume_builder.model.ChunkEmbedding;
+import com.example.resume_builder.model.UploadResponse;
 import com.example.resume_builder.service.ChunkService;
 import com.example.resume_builder.service.DocumentService;
 import com.example.resume_builder.service.EmbeddingService;
@@ -29,10 +30,10 @@ public class DocumentController {
     private final SearchService searchService;
 
     @PostMapping("/upload")
-    public List<Chunk> upload(@RequestParam("file") MultipartFile file)
+    public UploadResponse upload(@RequestParam("file") MultipartFile file)
             throws IOException {
 
-        return documentService.extractChunks(file);
+        return documentService.upload(file);
 
     }
     @PostMapping("/save")

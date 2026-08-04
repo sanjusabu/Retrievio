@@ -29,8 +29,15 @@ dependencyManagement {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
     implementation("org.springframework.ai:spring-ai-starter-model-ollama")
+
+    implementation("org.apache.pdfbox:pdfbox:3.0.5")
+
+    implementation("org.hibernate.orm:hibernate-vector:6.6.0.Final")
+
+    runtimeOnly("org.postgresql:postgresql")
 
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
@@ -38,13 +45,6 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-	implementation("org.apache.pdfbox:pdfbox:3.0.5")
-	implementation("jakarta.persistence:jakarta.persistence-api:3.1.0")
-
-    // JPA Provider (Hibernate ORM)
-    implementation("org.hibernate.orm:hibernate-core:6.5.0.Final")
-
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-
-    runtimeOnly("org.postgresql:postgresql")
 }
+
+// /Users/sanjusabu/Documents/resume-builder/resume-builder/src/main/resources
