@@ -7,10 +7,13 @@ import java.util.List;
 import java.util.UUID;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "documents")
 public class DocumentEntity {
 

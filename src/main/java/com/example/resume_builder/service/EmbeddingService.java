@@ -17,6 +17,10 @@ public class EmbeddingService {
 
     private final EmbeddingModel embeddingModel;
 
+    public float[] embed(String text) {
+        return embeddingModel.embed(text);
+    }
+    
     public List<ChunkEmbedding> embed(List<Chunk> chunks) {
 
         List<ChunkEmbedding> result = new ArrayList<>();

@@ -24,3 +24,8 @@ spring:
       embedding:
         options:
           model: nomic-embed-text
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE

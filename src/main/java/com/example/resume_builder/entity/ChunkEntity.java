@@ -7,11 +7,16 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Data
 @Table(name = "chunks")
 public class ChunkEntity {
 
@@ -33,6 +38,8 @@ public class ChunkEntity {
     @Array(length = 768)
     @Column(nullable = false)
     private float[] embedding;
+
+    private double similarity;
 
     public ChunkEntity(
             DocumentEntity document,
