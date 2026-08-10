@@ -1,0 +1,149 @@
+<div class="app-container">
+
+  <header class="header">
+
+    <div class="brand">
+
+      <div class="brand-icon">
+        ✦
+      </div>
+
+      <div>
+        <h1>Resume AI</h1>
+        <p>Intelligent resume assistant</p>
+      </div>
+
+    </div>
+
+    <div class="status">
+      <span class="status-dot"></span>
+      Resume loaded
+    </div>
+
+  </header>
+
+
+  <main class="chat-container">
+
+    @if (messages.length === 0) {
+
+      <section class="welcome-section">
+
+        <div class="welcome-icon">
+          ✦
+        </div>
+
+        <h2>Resume Assistant</h2>
+
+        <p>
+          Ask anything about the uploaded resume.
+          I'll find the relevant information for you.
+        </p>
+
+      </section>
+
+    }
+
+
+    <section class="messages">
+
+      @for (message of messages; track $index) {
+
+        <div
+          class="message"
+          [class.user-message]="message.role === 'user'"
+          [class.ai-message]="message.role === 'assistant'"
+        >
+
+          <div class="message-label">
+
+            @if (message.role === 'assistant') {
+
+              <span class="ai-icon">✦</span>
+              Resume AI
+
+            } @else {
+
+              You
+
+            }
+
+          </div>
+
+          <div class="message-bubble">
+            {{ message.content }}
+          </div>
+
+        </div>
+
+      }
+
+
+      @if (loading) {
+
+        <div class="message ai-message">
+
+          <div class="message-label">
+
+            <span class="ai-icon">✦</span>
+            Resume AI
+
+          </div>
+
+          <div class="message-bubble loading-message">
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+          </div>
+
+        </div>
+
+      }
+
+    </section>
+
+  </main>
+
+
+  <footer class="input-area">
+
+    <div class="input-wrapper">
+
+      <input
+        type="text"
+        [(ngModel)]="question"
+        (keyup.enter)="sendMessage()"
+        [disabled]="loading"
+        placeholder="Ask something about the resume..."
+      />
+
+      <button
+        class="send-button"
+        (click)="sendMessage()"
+        [disabled]="loading || !question.trim()"
+      >
+
+        @if (loading) {
+
+          <span>Thinking...</span>
+
+        } @else {
+
+          <span>Send</span>
+          <span class="send-icon">↑</span>
+
+        }
+
+      </button>
+
+    </div>
+
+    <p class="input-hint">
+      Resume AI uses semantic search to find relevant information.
+    </p>
+
+  </footer>
+
+</div>
