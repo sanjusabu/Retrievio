@@ -1,8 +1,7 @@
 package com.example.resume_builder.controller;
 
 import com.example.resume_builder.dto.ChatRequest;
-import com.example.resume_builder.dto.ChatResponse;
-import com.example.resume_builder.entity.ChunkEntity;
+import com.example.resume_builder.model.RetrievedChunk;
 import com.example.resume_builder.service.ChatService;
 import com.example.resume_builder.service.RetrievalService;
 
@@ -32,7 +31,12 @@ public class ChatController {
     // }
 
     @PostMapping("/retrieve")
-    public List<ChatResponse> retrieve(@RequestBody ChatRequest chatRequest) {
+    public List<RetrievedChunk> retrieve(@RequestBody ChatRequest chatRequest) {
         return retrievedService.retrieve(chatRequest.getRequest(), 3);
+    }
+    
+    @PostMapping("/ask")
+    public String ask(@RequestBody ChatRequest chatRequest) {
+        return chatService.ask(chatRequest.getRequest());
     }
 }

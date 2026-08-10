@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.resume_builder.dto.ChatResponse;
+
+import com.example.resume_builder.model.RetrievedChunk;
 import com.example.resume_builder.entity.ChunkEntity;
 import com.example.resume_builder.mapper.ChunkMapper;
-import com.example.resume_builder.model.RetrievedChunk;
 import com.example.resume_builder.repository.ChunkRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ public class RetrievalService {
     private final ChunkRepository repository;
     private final ChunkMapper chunkMapper;
 
-    public List<ChatResponse> retrieve(
+    public List<RetrievedChunk> retrieve(
             String question,
             int topK
     ) {
