@@ -157,8 +157,10 @@
           </div>
 
 
-          <div class="message-bubble">
-            {{ message.content }}
+          <div
+            class="message-bubble"
+            [innerHTML]="renderMarkdown(message.content)"
+          >
           </div>
 
         </div>

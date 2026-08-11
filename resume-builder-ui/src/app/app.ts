@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ChatService } from './service/chat.service';
 import { DocumentService } from './service/document.service';
 import { Message } from './model/model';
-
+import { marked } from 'marked';
 
 @Component({
   selector: 'app-root',
@@ -144,6 +144,10 @@ export class App {
 
   this.uploadError = '';
 
+ }
+
+ renderMarkdown(content: string): string {
+  return marked.parse(content) as string;
 }
 
 }
