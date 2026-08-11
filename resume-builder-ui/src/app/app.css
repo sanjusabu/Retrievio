@@ -543,3 +543,92 @@
   cursor: not-allowed;
   transform: none;
 }
+
+.upload-card {
+  width: min(520px, 90%);
+  margin: 40px auto;
+
+  padding: 40px;
+
+  text-align: center;
+
+  border: 1px dashed #454b63;
+  border-radius: 20px;
+
+  background: rgba(25, 28, 40, 0.7);
+}
+
+.upload-icon {
+  font-size: 42px;
+  margin-bottom: 16px;
+}
+
+.upload-card h2 {
+  margin: 0 0 8px;
+}
+
+.upload-card p {
+  color: #9298aa;
+  margin-bottom: 24px;
+}
+
+.upload-button {
+  display: inline-flex;
+
+  padding: 12px 22px;
+
+  border-radius: 10px;
+
+  background: #6754e9;
+  color: white;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: transform 0.2s ease;
+}
+
+.upload-button:hover {
+  transform: translateY(-2px);
+}
+
+.resume-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  margin: 20px auto;
+
+  color: #aeb4c5;
+
+  font-size: 14px;
+}
+
+.upload-error {
+  color: #ff6b6b !important;
+  margin-top: 16px !important;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.new-resume-button {
+  padding: 8px 14px;
+  border: 1px solid #454b63;
+  border-radius: 8px;
+  background: transparent;
+  color: #aeb4c5;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.new-resume-button:hover {
+  background: #25293a;
+  color: white;
+}

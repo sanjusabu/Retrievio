@@ -1,13 +1,10 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { finalize } from 'rxjs';
 
-import { ChatService } from './chat.service';
-
-interface Message {
-  role: 'user' | 'assistant';
-  content: string;
-}
+import { ChatService } from './service/chat.service';
+import { DocumentService } from './service/document.service';
+import { Message } from './model/model';
+import { marked } from 'marked';
 
 @Component({
   selector: 'app-root',
@@ -23,16 +20,73 @@ export class App {
 
   messages: Message[] = [];
 
+  uploading = false;
+
+  resumeUploaded = false;
+
+  uploadError = '';
+
   constructor(
     private chatService: ChatService,
+    private documentService: DocumentService,
     private cdr: ChangeDetectorRef
   ) {}
+
+  uploadResume(event: Event): void {
+
+    const input = event.target as HTMLInputElement;
+
+    if (!input.files || input.files.length === 0) {
+      return;
+    }
+
+    const file = input.files[0];
+
+    this.uploadError = '';
+
+    // Only allow PDFs
+    if (file.type !== 'application/pdf') {
+
+      this.uploadError = 'Please upload a PDF file.';
+
+      return;
+    }
+
+    this.uploading = true;
+
+    this.documentService.upload(file).subscribe({
+
+      next: (response) => {
+
+        console.log('Upload response:', response);
+
+        this.resumeUploaded = true;
+        this.uploading = false;
+
+        this.cdr.markForCheck();
+      },
+
+      error: (error) => {
+
+        console.error('Upload error:', error);
+
+        this.uploadError =
+          'Failed to upload the resume. Please try again.';
+
+        this.uploading = false;
+
+        this.cdr.markForCheck();
+      }
+
+    });
+  }
+
 
   sendMessage(): void {
 
     const question = this.question.trim();
 
-    if (!question || this.loading) {
+    if (!question || this.loading || !this.resumeUploaded) {
       return;
     }
 
@@ -44,27 +98,21 @@ export class App {
     this.question = '';
     this.loading = true;
 
-    // Update UI immediately
     this.cdr.markForCheck();
 
     this.chatService
       .ask(question)
-      .pipe(
-        finalize(() => {
-          this.loading = false;
-          this.cdr.markForCheck();
-        })
-      )
       .subscribe({
 
         next: (response: string) => {
 
-          console.log('Backend response:', response);
 
           this.messages.push({
             role: 'assistant',
             content: response
           });
+
+          this.loading = false;
 
           this.cdr.markForCheck();
         },
@@ -78,9 +126,28 @@ export class App {
             content: 'Sorry, something went wrong.'
           });
 
+          this.loading = false;
+
           this.cdr.markForCheck();
         }
 
       });
   }
+
+  uploadNewResume(): void {
+
+  this.resumeUploaded = false;
+
+  this.messages = [];
+
+  this.question = '';
+
+  this.uploadError = '';
+
+ }
+
+ renderMarkdown(content: string): string {
+  return marked.parse(content) as string;
+}
+
 }

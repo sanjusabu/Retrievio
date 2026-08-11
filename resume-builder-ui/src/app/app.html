@@ -1,5 +1,7 @@
 <div class="app-container">
 
+  <!-- ================= HEADER ================= -->
+
   <header class="header">
 
     <div class="brand">
@@ -15,17 +17,99 @@
 
     </div>
 
-    <div class="status">
-      <span class="status-dot"></span>
-      Resume loaded
-    </div>
+
+    <!-- Dynamic resume status -->
+    @if (resumeUploaded) {
+
+      <div class="header-actions">
+
+        <div class="status">
+          <span class="status-dot"></span>
+          Resume loaded
+        </div>
+
+        <button
+          class="new-resume-button"
+          (click)="uploadNewResume()"
+        >
+          Upload New Resume
+        </button>
+
+      </div>
+
+    } @else {
+
+      <div class="status">
+        <span class="status-dot"></span>
+        No resume
+      </div>
+
+    }
 
   </header>
 
 
+  <!-- ================= MAIN ================= -->
+
   <main class="chat-container">
 
-    @if (messages.length === 0) {
+
+    <!-- ================= UPLOAD ================= -->
+
+    @if (!resumeUploaded) {
+
+      <section class="upload-card">
+
+        <div class="upload-icon">
+          📄
+        </div>
+
+        <h2>Upload your resume</h2>
+
+        <p>
+          Upload your PDF resume to start chatting with it.
+        </p>
+
+
+        <label class="upload-button">
+
+          @if (uploading) {
+
+            <span>Uploading...</span>
+
+          } @else {
+
+            <span>Choose PDF</span>
+
+          }
+
+          <input
+            type="file"
+            accept=".pdf,application/pdf"
+            (change)="uploadResume($event)"
+            [disabled]="uploading"
+            hidden
+          />
+
+        </label>
+
+
+        @if (uploadError) {
+
+          <p class="upload-error">
+            {{ uploadError }}
+          </p>
+
+        }
+
+      </section>
+
+    }
+
+
+    <!-- ================= WELCOME ================= -->
+
+    @if (resumeUploaded && messages.length === 0) {
 
       <section class="welcome-section">
 
@@ -36,14 +120,16 @@
         <h2>Resume Assistant</h2>
 
         <p>
-          Ask anything about the uploaded resume.
-          I'll find the relevant information for you.
+          Your resume is ready.
+          Ask anything about it and I'll find the relevant information.
         </p>
 
       </section>
 
     }
 
+
+    <!-- ================= MESSAGES ================= -->
 
     <section class="messages">
 
@@ -70,8 +156,11 @@
 
           </div>
 
-          <div class="message-bubble">
-            {{ message.content }}
+
+          <div
+            class="message-bubble"
+            [innerHTML]="renderMarkdown(message.content)"
+          >
           </div>
 
         </div>
@@ -79,16 +168,22 @@
       }
 
 
+      <!-- ================= LOADING ================= -->
+
       @if (loading) {
 
         <div class="message ai-message">
 
           <div class="message-label">
 
-            <span class="ai-icon">✦</span>
+            <span class="ai-icon">
+              ✦
+            </span>
+
             Resume AI
 
           </div>
+
 
           <div class="message-bubble loading-message">
 
@@ -107,6 +202,8 @@
   </main>
 
 
+  <!-- ================= INPUT ================= -->
+
   <footer class="input-area">
 
     <div class="input-wrapper">
@@ -115,14 +212,15 @@
         type="text"
         [(ngModel)]="question"
         (keyup.enter)="sendMessage()"
-        [disabled]="loading"
+        [disabled]="loading || !resumeUploaded"
         placeholder="Ask something about the resume..."
       />
+
 
       <button
         class="send-button"
         (click)="sendMessage()"
-        [disabled]="loading || !question.trim()"
+        [disabled]="loading || !resumeUploaded || !question.trim()"
       >
 
         @if (loading) {
@@ -140,8 +238,19 @@
 
     </div>
 
+
     <p class="input-hint">
-      Resume AI uses semantic search to find relevant information.
+
+      @if (resumeUploaded) {
+
+        Resume AI uses semantic search to find relevant information.
+
+      } @else {
+
+        Upload your resume to enable chat.
+
+      }
+
     </p>
 
   </footer>

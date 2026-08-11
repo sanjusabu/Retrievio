@@ -25,11 +25,6 @@ public class ChatController {
         this.retrievedService = retrievalService;
     }
 
-    // @PostMapping
-    // public ChatResponse chat(@RequestBody ChatRequest chatRequest) {
-    //     return chatService.chat(chatRequest);
-    // }
-
     @PostMapping("/retrieve")
     public List<RetrievedChunk> retrieve(@RequestBody ChatRequest chatRequest) {
         return retrievedService.retrieve(chatRequest.getRequest(), 3);

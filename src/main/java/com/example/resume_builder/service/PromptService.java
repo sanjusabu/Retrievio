@@ -21,24 +21,29 @@ public class PromptService {
         .map(Chunk::content)
         .collect(Collectors.joining("\n\n"));
 
-        return """
-                You are a helpful assistant answering questions
-                about the uploaded document.
+ return """
+            You are a helpful assistant that answers questions
+            based only on the provided resume context.
 
-                Answer the question using ONLY the provided context.
+            Resume context:
+            ----------------
+            %s
+            ----------------
 
-                If the answer cannot be found in the context,
-                say that you don't know based on the provided document.
+            User question:
+            %s
 
-                Context:
-                --------------------
-                %s
-                --------------------
+            Instructions:
+            - Answer using only information from the resume context.
+            - Be concise and direct.
+            - Use plain text formatting.
+            - Put each important point on a new line.
+            - Use simple numbered lists when appropriate.
+            - Do not repeat the question.
+            - If the answer is not present in the resume, say:
+              "I couldn't find that information in the resume."
 
-                Question:
-                %s
-
-                Answer:
-                """.formatted(context, question);
+            Answer:
+            """.formatted(context, question);
     }
 }
