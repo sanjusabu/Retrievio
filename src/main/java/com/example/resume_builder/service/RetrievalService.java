@@ -9,6 +9,7 @@ import com.example.resume_builder.model.RetrievedChunk;
 import com.example.resume_builder.entity.ChunkEntity;
 import com.example.resume_builder.mapper.ChunkMapper;
 import com.example.resume_builder.repository.ChunkRepository;
+import com.example.resume_builder.repository.ChunkSearchProjection;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,11 +29,11 @@ public class RetrievalService {
         float[] queryEmbedding =
                 embeddingService.embed(question);
 
-        List<ChunkEntity> chunkEntities =repository.search(
+        List<ChunkSearchProjection> chunkProjections = repository.search(
                 queryEmbedding,
                 topK
         );
-        return chunkEntities.stream().map(chunkMapper::toDto).toList();
+        return chunkProjections.stream().map(chunkMapper::toDto).toList();
     }
 
 }

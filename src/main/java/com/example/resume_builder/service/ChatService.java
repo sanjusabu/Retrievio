@@ -26,15 +26,6 @@ public class ChatService {
         this.retrievalService = retrievalService;
         this.promptService = promptService;
     }
-    // public ChatResponse chat(ChatRequest chatRequest) {
-    //     ChatResponse chatResponse = new ChatResponse();
-    //     chatResponse.setResponse(chatClient
-    //             .prompt()
-    //             .user(chatRequest.getRequest())
-    //             .call()
-    //             .content());
-    //     return chatResponse;
-    // }
 
 
     public String ask(String question) {

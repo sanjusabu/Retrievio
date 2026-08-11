@@ -3,6 +3,7 @@ package com.example.resume_builder.mapper;
 import org.springframework.stereotype.Component;
 
 import com.example.resume_builder.model.RetrievedChunk;
+import com.example.resume_builder.repository.ChunkSearchProjection;
 import com.example.resume_builder.entity.ChunkEntity;
 import com.example.resume_builder.entity.DocumentEntity;
 import com.example.resume_builder.model.Chunk;
@@ -26,14 +27,13 @@ public class ChunkMapper {
     }
 
     public RetrievedChunk toDto(
-            ChunkEntity chunkEntity
+            ChunkSearchProjection chunkEntity
     ) {
         Chunk chunk = new Chunk(
                 chunkEntity.getChunkNumber(),
                 chunkEntity.getContent()
         );
         return new RetrievedChunk(chunk, chunkEntity.getSimilarity());
-
     }
 
 }

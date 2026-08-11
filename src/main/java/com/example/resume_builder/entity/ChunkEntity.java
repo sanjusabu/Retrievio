@@ -38,7 +38,6 @@ public class ChunkEntity {
     @Column(nullable = false)
     private float[] embedding;
 
-    private double similarity;
 
     public ChunkEntity(
             DocumentEntity document,
