@@ -15,23 +15,23 @@ java {
 
 repositories {
     mavenCentral()
-    maven {
-        url = uri("https://repo.spring.io/milestone")
-    }
 }
 
 dependencyManagement {
     imports {
-        mavenBom("org.springframework.ai:spring-ai-bom:1.0.0")
+        mavenBom("org.springframework.ai:spring-ai-bom:1.1.1")
     }
 }
 
 dependencies {
+
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
-    implementation("org.springframework.ai:spring-ai-starter-model-ollama")
+    // Google Gemini
+    implementation("org.springframework.ai:spring-ai-starter-model-google-genai")
+    implementation("org.springframework.ai:spring-ai-starter-model-google-genai-embedding")
 
     implementation("org.apache.pdfbox:pdfbox:3.0.5")
 
