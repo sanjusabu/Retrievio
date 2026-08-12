@@ -46,5 +46,3 @@ dependencies {
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
-
-// /Users/sanjusabu/Documents/resume-builder/resume-builder/src/main/resources
