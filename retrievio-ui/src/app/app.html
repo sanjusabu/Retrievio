@@ -1,0 +1,260 @@
+<div class="app-container">
+
+  <!-- ================= HEADER ================= -->
+
+  <header class="header">
+
+    <div class="brand">
+
+      <div class="brand-icon">
+        ✦
+      </div>
+
+      <div>
+        <h1>Retrievio</h1>
+        <p>Intelligent document assistant</p>
+      </div>
+
+    </div>
+
+
+    @if (docUploaded) {
+
+      <div class="header-actions">
+
+        <div class="status">
+          <span class="status-dot"></span>
+          Document loaded
+        </div>
+
+        <button
+          class="new-document-button"
+          (click)="uploadNewDoc()"
+        >
+          Upload New Document
+        </button>
+
+      </div>
+
+    } @else {
+
+      <div class="status">
+        <span class="status-dot"></span>
+        No document
+      </div>
+
+    }
+
+  </header>
+
+
+  <!-- ================= CHAT ================= -->
+
+  <main class="chat-container">
+
+
+    <!-- ================= UPLOAD ================= -->
+
+    @if (!docUploaded) {
+
+      <section class="upload-card">
+
+        <div class="upload-icon">
+          📄
+        </div>
+
+        <h2>Upload your document</h2>
+
+        <p>
+          Upload a PDF to start chatting with it.
+        </p>
+
+
+        <label class="upload-button">
+
+          @if (uploading) {
+
+            <span>Uploading...</span>
+
+          } @else {
+
+            <span>Choose PDF</span>
+
+          }
+
+          <input
+            type="file"
+            accept=".pdf,application/pdf"
+            (change)="uploadDocument($event)"
+            [disabled]="uploading"
+            hidden
+          />
+
+        </label>
+
+
+        @if (uploadError) {
+
+          <p class="upload-error">
+            {{ uploadError }}
+          </p>
+
+        }
+
+      </section>
+
+    }
+
+
+    <!-- ================= WELCOME ================= -->
+
+    @if (docUploaded && messages.length === 0) {
+
+      <section class="welcome-section">
+
+        <div class="welcome-icon">
+          ✦
+        </div>
+
+        <h2>Retrievio</h2>
+
+        <p>
+          Your document is ready.
+          Ask anything about it and I'll find the relevant information.
+        </p>
+
+      </section>
+
+    }
+
+
+    <!-- ================= MESSAGES ================= -->
+
+    <section class="messages">
+
+      @for (message of messages; track $index) {
+
+        <div
+          class="message"
+          [class.user-message]="message.role === 'user'"
+          [class.ai-message]="message.role === 'assistant'"
+        >
+
+          <div class="message-label">
+
+            @if (message.role === 'assistant') {
+
+              <span class="ai-icon">
+                ✦
+              </span>
+
+              Retrievio
+
+            } @else {
+
+              You
+
+            }
+
+          </div>
+
+
+          <div
+            class="message-bubble"
+            [innerHTML]="renderMarkdown(message.content)"
+          >
+          </div>
+
+        </div>
+
+      }
+
+
+      <!-- ================= LOADING ================= -->
+
+      @if (loading) {
+
+        <div class="message ai-message">
+
+          <div class="message-label">
+
+            <span class="ai-icon">
+              ✦
+            </span>
+
+            Retrievio
+
+          </div>
+
+
+          <div class="message-bubble loading-message">
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+          </div>
+
+        </div>
+
+      }
+
+    </section>
+
+  </main>
+
+
+  <!-- ================= INPUT ================= -->
+
+  <footer class="input-area">
+
+    <div class="input-wrapper">
+
+      <input
+        type="text"
+        [(ngModel)]="question"
+        (keyup.enter)="sendMessage()"
+        [disabled]="loading || !docUploaded"
+        placeholder="Ask something about the document..."
+      />
+
+
+      <button
+        class="send-button"
+        (click)="sendMessage()"
+        [disabled]="loading || !docUploaded || !question.trim()"
+      >
+
+        @if (loading) {
+
+          <span>Thinking...</span>
+
+        } @else {
+
+          <span>Send</span>
+          <span class="send-icon">↑</span>
+
+        }
+
+      </button>
+
+    </div>
+
+
+    <p class="input-hint">
+
+      @if (docUploaded) {
+
+        Retrievio uses semantic search to find relevant information.
+
+      } @else {
+
+        Upload a document to enable chat.
+
+      }
+
+    </p>
+
+  </footer>
+
+</div>
