@@ -1,29 +1,33 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/resumebuilder
-    username: postgres
-    password: postgres
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
 
   jpa:
     hibernate:
       ddl-auto: update
-
     show-sql: true
-
     properties:
       hibernate:
         format_sql: false
+
   ai:
-    ollama:
-      base-url: http://localhost:11434
+    google:
+      genai:
+        api-key: ${GOOGLE_API_KEY}
 
-      chat:
-        options:
-          model: qwen3
+        chat:
+          options:
+            model: gemini-3.6-flash
 
-      embedding:
-        options:
-          model: nomic-embed-text
+        embedding:
+          api-key: ${GOOGLE_API_KEY}
+          text:
+            options:
+              model: gemini-embedding-001
+              dimensions: 768
+              task-type: RETRIEVAL_DOCUMENT
 
 logging:
   level:
