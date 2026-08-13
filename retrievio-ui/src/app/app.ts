@@ -5,6 +5,7 @@ import { ChatService } from './service/chat.service';
 import { DocumentService } from './service/document.service';
 import { Message } from './model/model';
 import { marked } from 'marked';
+import { finalize } from 'rxjs/internal/operators/finalize';
 
 @Component({
   selector: 'app-root',
@@ -25,6 +26,10 @@ export class App {
   docUploaded = false;
 
   uploadError = '';
+
+  documentId: string | null = null;
+
+  deletingDocument = false;
 
   constructor(
     private chatService: ChatService,
@@ -58,8 +63,7 @@ export class App {
 
       next: (response) => {
 
-        console.log('Upload response:', response);
-
+        this.documentId = response.documentId;
         this.docUploaded = true;
         this.uploading = false;
 
@@ -135,17 +139,31 @@ export class App {
       });
   }
 
-  uploadNewDoc(): void {
+uploadNewDoc(): void {
+  this.deletingDocument = true;
 
+  this.documentService
+    .deleteChunks(this.documentId!)
+    .subscribe({
+      next: (response) => {
+        this.resetDocumentState();
+      },
+      error: (error) => {
+        console.error('Failed to delete chunks:', error);
+        this.resetDocumentState();
+      }
+    });
+}
+
+private resetDocumentState(): void {
+  this.deletingDocument = false;
   this.docUploaded = false;
-
   this.messages = [];
-
   this.question = '';
-
+  this.documentId = null;
   this.uploadError = '';
-
- }
+  this.cdr.detectChanges();
+}
 
  renderMarkdown(content: string): string {
   return marked.parse(content) as string;

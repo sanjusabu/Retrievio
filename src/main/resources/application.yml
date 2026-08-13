@@ -25,6 +25,11 @@ spring:
         options:
           model: nomic-embed-text
 
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
 logging:
   level:
     org.hibernate.SQL: DEBUG

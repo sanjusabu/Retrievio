@@ -23,6 +23,7 @@ import com.example.retrievio.model.UploadResponse;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.List;
+import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class DocumentService {
@@ -96,5 +97,10 @@ public class DocumentService {
         chunkRepository.saveAll(entities);
 
         return new UploadResponse(document.getId(), entities.size());
+    }
+
+   @Transactional
+    public void deleteChunks(UUID documentId) {
+        chunkRepository.deleteByDocumentId(documentId);
     }
 }
