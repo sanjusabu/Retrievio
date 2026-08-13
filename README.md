@@ -1,8 +1,146 @@
+# Retrievio
+
+> Intelligent document assistant powered by Retrieval-Augmented Generation (RAG).
+
+Retrievio is a document question-answering application that allows users to upload a PDF and ask questions about its contents.
+
+Instead of sending the entire document to an LLM for every query, Retrievio uses **Retrieval-Augmented Generation (RAG)** to find the most relevant parts of the document and provide them as context to the LLM.
+
 ## Architecture
 <img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/c2291b6f-cac0-467f-952a-1b6dcbe28bec" />
 
+# RAG Pipeline
+
+Retrievio follows the following RAG workflow.
+
+## 1. Document Upload
+
+The user uploads a PDF through the Angular frontend.
+
+```text
+PDF
+ ↓
+Angular
+ ↓
+Spring Boot API
+```
+
+The backend extracts the text from the document.
+
+> Retrievio currently does not persist the original PDF file.
+
+---
+
+## 2. Document Chunking
+
+The extracted document text is split into smaller chunks.
+
+```text
+Document
+   ↓
+Text Extraction
+   ↓
+Chunking
+   ↓
+Chunk 1
+Chunk 2
+Chunk 3
+...
+```
+
+Chunking allows the retrieval system to work with smaller and more relevant sections of the document.
+
+---
+
+## 3. Embedding Generation
+
+Each chunk is converted into a numerical vector representation using an embedding model.
+
+```text
+"Software Engineer at UKG..."
+             ↓
+        Embedding Model
+             ↓
+     [0.021, -0.182, ...]
+```
+
+These vectors represent the semantic meaning of the text.
+
+---
+
+## 4. Vector Storage
+
+The generated embeddings are stored in PostgreSQL using pgvector along with their corresponding document chunks.
+
+```text
+PostgreSQL + pgvector
+
+┌─────────────────────────────────┐
+│ Document Chunk                  │
+│                                 │
+│ text                            │
+│ embedding                       │
+│ document_id                     │
+└─────────────────────────────────┘
+```
+
+---
+
+## 5. Query Embedding
+
+When the user asks a question, the question is converted into an embedding using the embedding model.
+
+```text
+User Question
+      ↓
+Embedding Model
+      ↓
+Query Vector
+```
+
+---
+
+## 6. Similarity Search
+
+The query vector is compared against the stored document vectors.
+
+Retrievio uses vector similarity to find the chunks that are semantically closest to the user's question.
+
+```text
+Query Vector
+      │
+      ▼
+Vector Similarity Search
+      │
+      ▼
+Top Relevant Chunks
+```
+
+---
+
+## 7. Context + LLM
+
+The retrieved chunks are supplied as context to the LLM along with the user's question.
+
+```text
+Retrieved Context
+       +
+User Question
+       │
+       ▼
+     Qwen3
+       │
+       ▼
+Final Answer
+```
+
+This allows the LLM to answer questions based on the uploaded document rather than relying only on its general knowledge.
+
+
 ## Video Demo
 https://drive.google.com/file/d/1fxK0QGA3FFFT-VJ_Dt2-zw6q8ktn9-XR/view?usp=drive_link
+
+
 
 ## Retrievio - Full Flow
 
