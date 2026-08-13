@@ -26,12 +26,17 @@
           <span class="status-dot"></span>
           Document loaded
         </div>
-
         <button
           class="new-document-button"
           (click)="uploadNewDoc()"
+          [disabled]="deletingDocument"
         >
-          Upload New Document
+          @if (deletingDocument) {
+            <span class="button-spinner"></span>
+            Removing...
+          } @else {
+            Upload New Document
+          }
         </button>
 
       </div>

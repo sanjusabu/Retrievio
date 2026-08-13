@@ -10,7 +10,7 @@ import { UploadResponse } from '../model/model';
 export class DocumentService {
 
   private readonly apiUrl =
-    'http://localhost:8080/api/v1/documents/upload';
+    'http://localhost:8080/api/v1/documents';
 
   constructor(private http: HttpClient) {}
 
@@ -21,8 +21,14 @@ export class DocumentService {
     formData.append('file', file);
 
     return this.http.post<UploadResponse>(
-      this.apiUrl,
+      `${this.apiUrl}/upload`,
       formData
     );
   }
+
+  deleteChunks(documentId: string) {
+  return this.http.delete(
+    `${this.apiUrl}/chunks/${documentId}`
+  );
+}
 }

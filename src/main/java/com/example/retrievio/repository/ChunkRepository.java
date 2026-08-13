@@ -27,4 +27,6 @@ List<ChunkSearchProjection> search(
         @Param("embedding") float[] embedding,
         @Param("limit") int limit
 );
+
+void deleteByDocumentId(UUID documentId);
 }
